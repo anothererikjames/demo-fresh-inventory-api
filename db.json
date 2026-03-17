@@ -1,0 +1,14 @@
+{
+  "products": [
+    { "id": "prod-001", "name": "Wireless Mouse", "sku": "WM-100", "price": 29.99 },
+    { "id": "prod-002", "name": "USB-C Hub", "sku": "UH-200", "price": 49.99 }
+  ],
+  "stock-movements": [
+    { "id": "sm-101", "productId": "prod-001", "type": "inbound", "quantity": 500, "warehouseId": "wh-001" },
+    { "id": "sm-102", "productId": "prod-002", "type": "outbound", "quantity": 25, "warehouseId": "wh-001" }
+  ],
+  "warehouses": [
+    { "id": "wh-001", "name": "West Coast DC", "location": "Los Angeles, CA", "capacity": 10000 },
+    { "id": "wh-002", "name": "East Coast DC", "location": "Newark, NJ", "capacity": 15000 }
+  ]
+}
