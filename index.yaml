@@ -1,0 +1,381 @@
+openapi: 3.0.3
+info:
+  title: Fresh Commerce Inventory API
+  version: 1.0.0
+  description: Production-shaped demo service for the Fresh Commerce API Catalog. Manages products with typed contracts, pagination,
+    health checks, and consistent errors.
+  contact:
+    name: Fresh Commerce Platform Team
+    email: platform@example.com
+  license:
+    name: MIT
+    url: https://opensource.org/license/mit
+servers:
+- url: https://inventory.api.fresh-commerce.test
+  description: Catalog runtime placeholder
+security:
+- bearerAuth: []
+tags:
+- name: Product
+  description: Manage products
+- name: Operations
+  description: Service health
+paths:
+  /health:
+    get:
+      tags:
+      - Operations
+      summary: Check service health
+      operationId: getProductServiceHealth
+      security: []
+      responses:
+        '200':
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Health'
+        '429':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /products:
+    get:
+      tags:
+      - Product
+      summary: List products
+      operationId: listProducts
+      parameters:
+      - $ref: '#/components/parameters/Limit'
+      - $ref: '#/components/parameters/Cursor'
+      - name: status
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - active
+          - low_stock
+          - out_of_stock
+          - discontinued
+      responses:
+        '200':
+          description: Page of products
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductList'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+    post:
+      tags:
+      - Product
+      summary: Create a product
+      operationId: createProduct
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductCreate'
+      responses:
+        '201':
+          description: A product
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /products/{sku}:
+    parameters:
+    - $ref: '#/components/parameters/ProductId'
+    get:
+      tags:
+      - Product
+      summary: Get a product
+      operationId: getProduct
+      responses:
+        '200':
+          description: A product
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+    patch:
+      tags:
+      - Product
+      summary: Update a product
+      operationId: updateProduct
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductUpdate'
+      responses:
+        '200':
+          description: A product
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+    delete:
+      tags:
+      - Product
+      summary: Delete a product
+      operationId: deleteProduct
+      responses:
+        '204':
+          description: Deleted
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  parameters:
+    ProductId:
+      name: sku
+      in: path
+      required: true
+      description: Unique product identifier
+      schema:
+        type: string
+        minLength: 1
+      example: sku-101
+    Limit:
+      name: limit
+      in: query
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+    Cursor:
+      name: cursor
+      in: query
+      required: false
+      schema:
+        type: string
+  responses:
+    BadRequest:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalError:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Product:
+      type: object
+      required:
+      - sku
+      - status
+      - name
+      - quantity
+      - warehouseId
+      - createdAt
+      - updatedAt
+      properties:
+        sku:
+          type: string
+          example: sku-101
+        status:
+          type: string
+          enum:
+          - active
+          - low_stock
+          - out_of_stock
+          - discontinued
+          example: active
+        name:
+          type: string
+          minLength: 1
+          example: Widget Prime
+        quantity:
+          type: integer
+          minimum: 0
+          example: 42
+        warehouseId:
+          type: string
+          example: wh-west-1
+        unitPrice:
+          type: number
+          format: double
+          minimum: 0
+          example: 49.99
+        createdAt:
+          type: string
+          format: date-time
+          example: '2026-07-16T20:00:00Z'
+        updatedAt:
+          type: string
+          format: date-time
+          example: '2026-07-16T20:00:00Z'
+      additionalProperties: false
+    ProductCreate:
+      type: object
+      required:
+      - name
+      - quantity
+      - warehouseId
+      properties:
+        status:
+          type: string
+          enum:
+          - active
+          - low_stock
+          - out_of_stock
+          - discontinued
+          example: active
+        name:
+          type: string
+          minLength: 1
+          example: Widget Prime
+        quantity:
+          type: integer
+          minimum: 0
+          example: 42
+        warehouseId:
+          type: string
+          example: wh-west-1
+        unitPrice:
+          type: number
+          format: double
+          minimum: 0
+          example: 49.99
+      additionalProperties: false
+    ProductUpdate:
+      type: object
+      minProperties: 1
+      properties:
+        status:
+          type: string
+          enum:
+          - active
+          - low_stock
+          - out_of_stock
+          - discontinued
+          example: active
+        name:
+          type: string
+          minLength: 1
+          example: Widget Prime
+        quantity:
+          type: integer
+          minimum: 0
+          example: 42
+        warehouseId:
+          type: string
+          example: wh-west-1
+        unitPrice:
+          type: number
+          format: double
+          minimum: 0
+          example: 49.99
+      additionalProperties: false
+    ProductList:
+      type: object
+      required:
+      - data
+      - meta
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+        meta:
+          $ref: '#/components/schemas/PageMeta'
+      additionalProperties: false
+    PageMeta:
+      type: object
+      required:
+      - limit
+      - count
+      properties:
+        limit:
+          type: integer
+          example: 20
+        count:
+          type: integer
+          example: 1
+        nextCursor:
+          type: string
+          nullable: true
+          example: null
+      additionalProperties: false
+    Health:
+      type: object
+      required:
+      - status
+      - service
+      - version
+      properties:
+        status:
+          type: string
+          enum:
+          - ok
+          example: ok
+        service:
+          type: string
+          example: inventory
+        version:
+          type: string
+          example: 1.0.0
+      additionalProperties: false
+    Error:
+      type: object
+      required:
+      - code
+      - message
+      - requestId
+      properties:
+        code:
+          type: string
+          example: not_found
+        message:
+          type: string
+          example: The requested resource was not found
+        requestId:
+          type: string
+          example: req-9f2a
+      additionalProperties: false
