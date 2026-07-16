@@ -3,6 +3,7 @@ id: 9376653a-a695-4a69-a719-c936e718729c
 url: "{{baseUrl}}/products?limit=20&cursor=string&status=out_of_stock"
 method: GET
 headers:
+  X-Mock-Response-Code: "200"
   Accept: application/json
 queryParams:
   limit: "20"

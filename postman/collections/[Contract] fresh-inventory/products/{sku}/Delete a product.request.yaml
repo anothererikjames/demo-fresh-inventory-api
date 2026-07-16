@@ -3,6 +3,7 @@ id: 24163815-0a26-437a-8b34-f27642ed82a7
 url: "{{baseUrl}}/products/:sku"
 method: DELETE
 headers:
+  X-Mock-Response-Code: "204"
   Accept: application/json
 pathVariables:
   - key: sku

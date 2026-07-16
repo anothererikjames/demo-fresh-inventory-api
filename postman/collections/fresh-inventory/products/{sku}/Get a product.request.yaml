@@ -3,6 +3,7 @@ id: 5896a530-aba1-4512-8725-0caa13304da9
 url: "{{baseUrl}}/products/:sku"
 method: GET
 headers:
+  X-Mock-Response-Code: "200"
   Accept: application/json
 pathVariables:
   - key: sku

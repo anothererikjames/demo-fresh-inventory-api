@@ -3,6 +3,7 @@ id: 84729671-56df-4b43-9e20-e209e4c9d3b3
 url: "{{baseUrl}}/health"
 method: GET
 headers:
+  X-Mock-Response-Code: "200"
   Accept: application/json
 settings: {}
 examples: ./.resources/Check service health.resources/examples

@@ -3,6 +3,7 @@ id: 97461986-6017-4746-beea-485c20232936
 url: "{{baseUrl}}/products"
 method: POST
 headers:
+  X-Mock-Response-Code: "201"
   Content-Type: application/json
   Accept: application/json
 body:

@@ -3,6 +3,7 @@ id: 63db6260-2f6d-46d9-bb57-32d911429801
 url: "{{baseUrl}}/products/:sku"
 method: PATCH
 headers:
+  X-Mock-Response-Code: "200"
   Content-Type: application/json
   Accept: application/json
 pathVariables:

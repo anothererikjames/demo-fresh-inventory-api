@@ -3,6 +3,7 @@ id: 8054382e-1fa0-498a-bb6e-7861c3565fc2
 url: "{{baseUrl}}/products?limit=20&cursor=string&status=active"
 method: GET
 headers:
+  X-Mock-Response-Code: "200"
   Accept: application/json
 queryParams:
   limit: "20"
