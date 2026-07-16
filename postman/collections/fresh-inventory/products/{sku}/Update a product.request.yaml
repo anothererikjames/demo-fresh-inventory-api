@@ -1,0 +1,24 @@
+$kind: http-request
+id: 63db6260-2f6d-46d9-bb57-32d911429801
+url: "{{baseUrl}}/products/:sku"
+method: PATCH
+headers:
+  Content-Type: application/json
+  Accept: application/json
+pathVariables:
+  - key: sku
+    value: sku-101
+    description: Unique product identifier
+body:
+  type: json
+  content: |-
+    {
+      "status": "active",
+      "name": "Widget Prime",
+      "quantity": 42,
+      "warehouseId": "wh-west-1",
+      "unitPrice": 49.99
+    }
+settings: {}
+examples: ./.resources/Update a product.resources/examples
+order: 2000

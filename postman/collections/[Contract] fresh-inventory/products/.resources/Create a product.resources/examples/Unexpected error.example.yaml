@@ -1,0 +1,37 @@
+$kind: http-example
+id: 94aa4c6a-179c-4c61-86de-6fc5533d416a
+request:
+  url: "{{baseUrl}}/products"
+  method: POST
+  headers:
+    - key: Content-Type
+      value: application/json
+    - key: Accept
+      value: application/json
+    - key: Authorization
+      value: Bearer <token>
+      description: "Added as a part of security scheme: bearer"
+  body:
+    type: json
+    content: |-
+      {
+        "name": "Widget Prime",
+        "quantity": 42,
+        "warehouseId": "wh-west-1",
+        "status": "active",
+        "unitPrice": 49.99
+      }
+response:
+  statusCode: 500
+  statusText: Internal Server Error
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "code": "not_found",
+        "message": "The requested resource was not found",
+        "requestId": "req-9f2a"
+      }
+order: 4000

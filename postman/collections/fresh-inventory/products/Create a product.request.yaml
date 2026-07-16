@@ -1,0 +1,20 @@
+$kind: http-request
+id: 97461986-6017-4746-beea-485c20232936
+url: "{{baseUrl}}/products"
+method: POST
+headers:
+  Content-Type: application/json
+  Accept: application/json
+body:
+  type: json
+  content: |-
+    {
+      "name": "Widget Prime",
+      "quantity": 42,
+      "warehouseId": "wh-west-1",
+      "status": "active",
+      "unitPrice": 49.99
+    }
+settings: {}
+examples: ./.resources/Create a product.resources/examples
+order: 3000

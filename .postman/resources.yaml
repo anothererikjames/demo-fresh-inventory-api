@@ -1,0 +1,22 @@
+workspace:
+  id: 5a3ed10a-c142-43c6-b752-898eb341f2ce
+localResources:
+  collections:
+    - ../postman/collections/fresh-inventory
+    - ../postman/collections/[Smoke] fresh-inventory
+    - ../postman/collections/[Contract] fresh-inventory
+  environments:
+    - ../postman/environments/prod.postman_environment.json
+    - ../postman/environments/stage.postman_environment.json
+  specs:
+    - ../index.yaml
+cloudResources:
+  collections:
+    ../postman/collections/fresh-inventory: 56692411-3945a249-62a1-41e8-b656-0987230b3654
+    ../postman/collections/[Smoke] fresh-inventory: 56692411-b91a15a4-0161-4f53-85f0-9ee613035140
+    ../postman/collections/[Contract] fresh-inventory: 56692411-9826f90a-ed54-4321-8d27-9b15bdf6b6e5
+  environments:
+    ../postman/environments/prod.postman_environment.json: 56692411-f25e1954-d354-4ce2-b203-03b8fee832db
+    ../postman/environments/stage.postman_environment.json: 56692411-58b81e11-9395-4ce9-bf0b-a64e03f5602e
+  specs:
+    ../index.yaml: 7973c323-2086-4f17-8406-58e52a38933c

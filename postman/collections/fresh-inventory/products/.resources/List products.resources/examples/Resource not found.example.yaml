@@ -1,0 +1,29 @@
+$kind: http-example
+id: 1df04cd9-546c-4527-8c16-574f473ebe44
+request:
+  url: "{{baseUrl}}/products?limit=20&cursor=string&status=low_stock"
+  method: GET
+  headers:
+    - key: Accept
+      value: application/json
+    - key: Authorization
+      value: Bearer <token>
+      description: "Added as a part of security scheme: bearer"
+  queryParams:
+    limit: "20"
+    cursor: string
+    status: low_stock
+response:
+  statusCode: 404
+  statusText: Not Found
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "code": "not_found",
+        "message": "The requested resource was not found",
+        "requestId": "req-9f2a"
+      }
+order: 3000

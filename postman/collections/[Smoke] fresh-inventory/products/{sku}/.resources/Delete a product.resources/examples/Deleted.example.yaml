@@ -1,0 +1,20 @@
+$kind: http-example
+id: a7c7fce4-5dfc-42aa-8673-9fc2b83dd125
+request:
+  url: "{{baseUrl}}/products/:sku"
+  method: DELETE
+  headers:
+    - key: Authorization
+      value: Bearer <token>
+      description: "Added as a part of security scheme: bearer"
+  pathVariables:
+    - key: sku
+      value: sku-101
+      description: Unique product identifier
+response:
+  statusCode: 204
+  statusText: No Content
+  body:
+    type: text
+    content: ""
+order: 1000

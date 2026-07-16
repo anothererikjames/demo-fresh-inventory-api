@@ -1,0 +1,34 @@
+$kind: http-example
+id: 81170d2d-ec5a-4610-9cc9-6b7ed578f129
+request:
+  url: "{{baseUrl}}/products/:sku"
+  method: GET
+  headers:
+    - key: Accept
+      value: application/json
+    - key: Authorization
+      value: Bearer <token>
+      description: "Added as a part of security scheme: bearer"
+  pathVariables:
+    - key: sku
+      value: sku-101
+      description: Unique product identifier
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "sku": "sku-101",
+        "status": "active",
+        "name": "Widget Prime",
+        "quantity": 42,
+        "warehouseId": "wh-west-1",
+        "createdAt": "2026-07-16T20:00:00Z",
+        "updatedAt": "2026-07-16T20:00:00Z",
+        "unitPrice": 49.99
+      }
+order: 1000

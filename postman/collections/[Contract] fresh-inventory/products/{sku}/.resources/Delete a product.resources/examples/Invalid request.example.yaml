@@ -1,0 +1,29 @@
+$kind: http-example
+id: 419d615d-9102-4709-bf37-7211451ed636
+request:
+  url: "{{baseUrl}}/products/:sku"
+  method: DELETE
+  headers:
+    - key: Accept
+      value: application/json
+    - key: Authorization
+      value: Bearer <token>
+      description: "Added as a part of security scheme: bearer"
+  pathVariables:
+    - key: sku
+      value: sku-101
+      description: Unique product identifier
+response:
+  statusCode: 400
+  statusText: Bad Request
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "code": "not_found",
+        "message": "The requested resource was not found",
+        "requestId": "req-9f2a"
+      }
+order: 2000

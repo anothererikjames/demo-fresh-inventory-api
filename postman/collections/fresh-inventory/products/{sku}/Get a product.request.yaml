@@ -1,0 +1,13 @@
+$kind: http-request
+id: 5896a530-aba1-4512-8725-0caa13304da9
+url: "{{baseUrl}}/products/:sku"
+method: GET
+headers:
+  Accept: application/json
+pathVariables:
+  - key: sku
+    value: sku-101
+    description: Unique product identifier
+settings: {}
+examples: ./.resources/Get a product.resources/examples
+order: 1000

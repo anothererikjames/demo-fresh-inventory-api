@@ -1,0 +1,13 @@
+$kind: http-request
+id: 24a84017-c108-4325-8b26-bbc131cc8f4d
+url: "{{baseUrl}}/products/:sku"
+method: DELETE
+headers:
+  Accept: application/json
+pathVariables:
+  - key: sku
+    value: sku-101
+    description: Unique product identifier
+settings: {}
+examples: ./.resources/Delete a product.resources/examples
+order: 3000
