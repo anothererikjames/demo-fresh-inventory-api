@@ -1,0 +1,62 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo-fresh-inventory-api
+spec:
+  selector:
+    app: demo-fresh-inventory-api
+  ports:
+    - name: http
+      port: 80
+      targetPort: 3000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-fresh-inventory-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-fresh-inventory-api
+  template:
+    metadata:
+      labels:
+        app: demo-fresh-inventory-api
+    spec:
+      containers:
+        - name: demo-fresh-inventory-api
+          image: demo-fresh-inventory-api:catalog-v1
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 3000
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 2
+            periodSeconds: 5
+        - name: postman-insights-agent
+          image: public.ecr.aws/postman/postman-insights-agent:latest
+          args:
+            - apidump
+            - --workspace-id
+            - 5a3ed10a-c142-43c6-b752-898eb341f2ce
+            - --system-env
+            - 019db120-703b-7dd7-9416-75a588f130d0
+            - --service-name
+            - fresh-inventory
+            - --filter
+            - port 3000
+          env:
+            - name: POSTMAN_INSIGHTS_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: postman-agent-secrets
+                  key: postman-api-key
+          securityContext:
+            capabilities:
+              add:
+                - NET_RAW
+                - SYS_ADMIN
+                - SYS_PTRACE
